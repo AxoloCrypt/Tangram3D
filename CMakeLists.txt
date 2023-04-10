@@ -5,8 +5,9 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(includes/glm)
 include_directories(includes/GLAD/include)
+include_directories(includes/stb)
 
-set(SOURCE_FILES src/main.cpp includes/GLAD/src/glad.c src/camera/Camera.h src/camera/Camera.cpp src/game/Figure.h src/shader/Shader.h src/shader/Shader.cpp src/game/Tangram.h src/game/Figure.cpp)
+set(SOURCE_FILES src/main.cpp src/stb/stb.cpp includes/GLAD/src/glad.c src/camera/Camera.h src/camera/Camera.cpp src/game/Figure.h src/shader/Shader.h src/shader/Shader.cpp src/game/Tangram.h src/game/Figure.cpp)
 set(OpenGlLinkers -lglfw)
 
 
