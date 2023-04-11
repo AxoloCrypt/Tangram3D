@@ -5,8 +5,11 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <fstream>
-#include "glm.hpp"
 #include <vector>
+
+
+#include "glm.hpp"
+#include "stb_image.h"
 
 std::string GetFileContents(const char* filename);
 void CompileErrors(unsigned int shader, const char* type);
@@ -26,6 +29,7 @@ struct Shader{
 struct Vertex {
     glm::vec3 position;
     glm::vec3 color;
+    glm::vec2 texture;
 };
 
 
@@ -65,5 +69,20 @@ struct EBO{
     void Delete();
 
 };
+
+struct Texture{
+    GLuint ID;
+
+
+    Texture();
+    Texture(const char* source, GLenum slot);
+
+    void TextureUnit(Shader& shader, const char* uniform, GLuint unit);
+    void Bind();
+    void Unbind();
+    void Delete();
+
+};
+
 
 #endif //TANGRAM3D_SHADER_H

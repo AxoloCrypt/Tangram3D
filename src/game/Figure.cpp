@@ -1,18 +1,20 @@
 #include "Figure.h"
 
-Figure::Figure(const char* vertexSource, const char* fragmentSource, std::vector<Vertex>& shape, std::vector<GLuint>& indices) {
+Figure::Figure(const char* vertexSource, const char* fragmentSource, const char* textureSource,std::vector<Vertex>& shape, std::vector<GLuint>& indices) {
 
     this->shader = Shader(vertexSource, fragmentSource);
     this->shape = shape;
     this->indices = indices;
+    this->texture = Texture(textureSource, 0);
 
     vao.Bind();
 
     vbo = VBO(this->shape);
     ebo = EBO(this->indices);
 
-    vao.LinkAttribute(vbo, 0, 3, GL_FLOAT, 6 * sizeof(float), nullptr);
-    vao.LinkAttribute(vbo, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    vao.LinkAttribute(vbo, 0, 3, GL_FLOAT, 8 * sizeof(float), nullptr);
+    vao.LinkAttribute(vbo, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    vao.LinkAttribute(vbo, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 
     vao.Unbind();
     vbo.Unbind();
@@ -20,13 +22,17 @@ Figure::Figure(const char* vertexSource, const char* fragmentSource, std::vector
 
 }
 
-void Figure::Draw(GLenum primitive){
+void Figure::Draw(GLenum primitive, glm::mat4 cameraMatrix){
+    texture.TextureUnit(shader, "tex0", 0);
     shader.Activate();
+    texture.Bind();
     vao.Bind();
+    glUniformMatrix4fv(glGetUniformLocation(shader.ID, "cameraPosition"), 1, GL_FALSE, glm::value_ptr(cameraMatrix));
     glDrawElements(primitive, indices.size(), GL_UNSIGNED_INT, 0);
 }
 
 void Figure::Translate() {
+
 }
 
 void Figure::Rotate() {
@@ -37,5 +43,6 @@ void Figure::Delete() {
     vao.Delete();
     vbo.Delete();
     ebo.Delete();
+    texture.Delete();
     shader.Delete();
 }
