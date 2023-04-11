@@ -137,3 +137,53 @@ void EBO::Delete() {
 }
 
 EBO::EBO() = default;
+
+Texture::Texture() = default;
+
+Texture::Texture(const char *source, GLenum slot) {
+    int width, height, numCol;
+
+    unsigned char* bytes = stbi_load(source, &width, &height, &numCol, 0);
+
+    glGenTextures(1, &ID);
+    glActiveTexture(slot);
+    glBindTexture(GL_TEXTURE_2D, ID);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_NEAREST);
+
+    if(numCol == 4)
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
+    else if(numCol == 3)
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, bytes);
+    else if(numCol == 1)
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0,GL_RED, GL_UNSIGNED_BYTE, bytes);
+    else
+        throw std::invalid_argument("Automatic Texture type recognition failed");
+
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    stbi_image_free(bytes);
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Texture::Bind() {
+    glBindTexture(GL_TEXTURE_2D, ID);
+}
+
+void Texture::Unbind() {
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Texture::Delete() {
+    glDeleteTextures(1, &ID);
+}
+
+void Texture::TextureUnit(Shader &shader, const char *uniform, GLuint unit) {
+    GLuint textureUnit = glGetUniformLocation(shader.ID, uniform);
+    shader.Activate();
+    glUniform1i(textureUnit, unit);
+}

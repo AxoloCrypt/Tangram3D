@@ -8,6 +8,7 @@ const GLuint WIDTH = 800;
 const GLuint HEIGHT = 650;
 const char* figureVertexSource = "../src/glsl/figure.vert";
 const char* figureFragmentSource = "../src/glsl/figure.frag";
+const char* figureTextureSource = "../resources/textures/Paper_cream_grid_blue.png";
 
 int main() {
     glfwInit();
@@ -30,30 +31,8 @@ int main() {
 
     glViewport(0, 0, WIDTH, HEIGHT);
 
-
-//    Shader shaderProgram(figureVertexSource, figureFragmentSource);
-//
-//
-//
-//    // Generates Vertex Array Object and binds it
-//    VAO VAO1;
-//    VAO1.Bind();
-//
-//    // Generates Vertex Buffer Object and links it to vertices
-//    VBO VBO1(CUBE2D_VERTICES);
-//    // Generates Element Buffer Object and links it to indices
-//    EBO EBO1(CUBE2D_INDICES);
-//
-//    // Links VBO attributes such as coordinates and colors to VAO
-//    VAO1.LinkAttribute(VBO1, 0, 3, GL_FLOAT, 6 *sizeof(float), (void*)0);
-//    VAO1.LinkAttribute(VBO1, 1, 3, GL_FLOAT, 6 *sizeof(float), (void*)(3 * sizeof(float)));
-//    // Unbind all to prevent accidentally modifying them
-//    VAO1.Unbind();
-//    VBO1.Unbind();
-//    EBO1.Unbind();
-
-    Figure triangle(figureVertexSource, figureFragmentSource, EQUILATERAL_TRIANGLE_VERTICES, EQUILATERAL_TRIANGLE_INDICES);
-    Figure square(figureVertexSource, figureFragmentSource, CUBE2D_VERTICES, CUBE2D_INDICES);
+    Figure triangle(figureVertexSource, figureFragmentSource, figureTextureSource,EQUILATERAL_TRIANGLE_VERTICES, EQUILATERAL_TRIANGLE_INDICES);
+//    Figure square(figureVertexSource, figureFragmentSource, CUBE2D_VERTICES, CUBE2D_INDICES);
 
     glEnable(GL_DEPTH_TEST);
 
@@ -62,7 +41,7 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         triangle.Draw(GL_TRIANGLES);
-        square.Draw(GL_TRIANGLE_FAN);
+//        square.Draw(GL_TRIANGLE_FAN);
 
 //        shaderProgram.Activate();
 //        VAO1.Bind();
@@ -72,7 +51,7 @@ int main() {
     }
 
     triangle.Delete();
-    square.Delete();
+//    square.Delete();
     glfwDestroyWindow(window);
     glfwTerminate();
 

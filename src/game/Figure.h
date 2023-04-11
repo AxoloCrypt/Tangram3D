@@ -9,10 +9,11 @@ struct Figure {
    VAO vao;
    VBO vbo;
    EBO ebo;
+   Texture texture;
    std::vector<Vertex> shape;
    std::vector<GLuint> indices;
 
-   explicit Figure(const char* vertexSource, const char* fragmentSource, std::vector<Vertex>& shape, std::vector<GLuint>& indices);
+   explicit Figure(const char* vertexSource, const char* fragmentSource, const char* textureSource,std::vector<Vertex>& shape, std::vector<GLuint>& indices);
 
 
    void Draw(GLenum primitive);
