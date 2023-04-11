@@ -22,15 +22,17 @@ Figure::Figure(const char* vertexSource, const char* fragmentSource, const char*
 
 }
 
-void Figure::Draw(GLenum primitive){
+void Figure::Draw(GLenum primitive, glm::mat4 cameraMatrix){
     texture.TextureUnit(shader, "tex0", 0);
     shader.Activate();
     texture.Bind();
     vao.Bind();
+    glUniformMatrix4fv(glGetUniformLocation(shader.ID, "cameraPosition"), 1, GL_FALSE, glm::value_ptr(cameraMatrix));
     glDrawElements(primitive, indices.size(), GL_UNSIGNED_INT, 0);
 }
 
 void Figure::Translate() {
+
 }
 
 void Figure::Rotate() {

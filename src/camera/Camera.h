@@ -1,8 +1,10 @@
 #ifndef TANGRAM3D_CAMERA_H
 #define TANGRAM3D_CAMERA_H
 
-#include "GL/glew.h"
-#include "GL/glut.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+#include "../shader/Shader.h"
 #include "glm.hpp"
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
@@ -26,8 +28,8 @@ struct Camera{
 
     Camera(GLint width, GLint height, glm::vec3 position);
     void UpdateMatrix(float fovDegree, float nearPlane, float farPlane);
-    void Matrix();
-    void Inputs(unsigned char key);
+    void Matrix(Shader& shader, const char* uniform);
+    void Inputs(GLFWwindow* window);
 
 };
 

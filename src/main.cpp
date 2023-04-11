@@ -3,6 +3,7 @@
 
 #include "game/Tangram.h"
 #include "game/Figure.h"
+#include "camera/Camera.h"
 
 const GLuint WIDTH = 800;
 const GLuint HEIGHT = 650;
@@ -32,7 +33,9 @@ int main() {
     glViewport(0, 0, WIDTH, HEIGHT);
 
     Figure triangle(figureVertexSource, figureFragmentSource, figureTextureSource,EQUILATERAL_TRIANGLE_VERTICES, EQUILATERAL_TRIANGLE_INDICES);
-//    Figure square(figureVertexSource, figureFragmentSource, CUBE2D_VERTICES, CUBE2D_INDICES);
+    Figure square(figureVertexSource, figureFragmentSource, figureTextureSource,CUBE2D_VERTICES, CUBE2D_INDICES);
+
+    Camera camera(WIDTH, HEIGHT, glm::vec3(0.0f, 0.0f, 1.0f));
 
     glEnable(GL_DEPTH_TEST);
 
@@ -40,18 +43,22 @@ int main() {
         glClearColor(0.01f, 0.13f, 0.11f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        triangle.Draw(GL_TRIANGLES);
-//        square.Draw(GL_TRIANGLE_FAN);
+        camera.Inputs(window);
+        camera.UpdateMatrix(45.0f, 0.1f, 100.f);
 
+
+        triangle.Draw(GL_TRIANGLES, camera.matrix);
+        square.Draw(GL_TRIANGLE_FAN, camera.matrix);
 //        shaderProgram.Activate();
 //        VAO1.Bind();
+
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
     triangle.Delete();
-//    square.Delete();
+    square.Delete();
     glfwDestroyWindow(window);
     glfwTerminate();
 
