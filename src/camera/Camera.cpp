@@ -40,36 +40,4 @@ void Camera::Inputs(GLFWwindow* window) {
         position += speed * glm::normalize(glm::cross(orientation, up));
     }
 
-    if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS){
-        glfwSetInputMode(window, GLFW_CURSOR,GLFW_CURSOR_HIDDEN);
-
-        if(firstClick){
-            glfwSetCursorPos(window, (width / 2), (height / 2));
-            firstClick = false;
-        }
-
-        double mouseX;
-        double mouseY;
-        glfwGetCursorPos(window, &mouseX, &mouseY);
-
-        float rotX = sensitivity * (float)(mouseY - (height/2)) / height;
-        float rotY = sensitivity * (float)(mouseX - (height/2)) / width;
-
-        glm::vec3 newOrientation = glm::rotate(orientation, glm::radians(-rotX),
-                                               glm::normalize(glm::cross(orientation, up)));
-
-        if(std::abs(glm::angle(newOrientation, up) - glm::radians(90.0f)) <= glm::radians(85.0f)){
-            orientation = newOrientation;
-        }
-
-        orientation = glm::rotate(orientation, glm::radians(-rotY), up);
-
-        glfwSetCursorPos(window, (width / 2), (height / 2));
-    }
-    else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE)
-    {
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        firstClick = true;
-    }
-
 }

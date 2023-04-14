@@ -49,8 +49,6 @@ int main() {
 
         triangle.Draw(GL_TRIANGLES, camera.matrix);
         square.Draw(GL_TRIANGLE_FAN, camera.matrix);
-//        shaderProgram.Activate();
-//        VAO1.Bind();
 
 
         glfwSwapBuffers(window);
