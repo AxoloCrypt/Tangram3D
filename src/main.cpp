@@ -32,8 +32,9 @@ int main() {
 
     glViewport(0, 0, WIDTH, HEIGHT);
 
-    Figure triangle(figureVertexSource, figureFragmentSource, figureTextureSource,EQUILATERAL_TRIANGLE_VERTICES, EQUILATERAL_TRIANGLE_INDICES);
-    Figure square(figureVertexSource, figureFragmentSource, figureTextureSource,CUBE2D_VERTICES, CUBE2D_INDICES);
+    Figure triangle(figureVertexSource, figureFragmentSource, figureTextureSource,EQUILATERAL_TRIANGLE_VERTICES,
+                    EQUILATERAL_TRIANGLE_INDICES, glm::vec3(0.0f, 0.0f, -5.0f), glm::mat4(1.0f));
+//    Figure square(figureVertexSource, figureFragmentSource, figureTextureSource,CUBE2D_VERTICES, CUBE2D_INDICES);
 
     Camera camera(WIDTH, HEIGHT, glm::vec3(0.0f, 0.0f, 1.0f));
 
@@ -44,11 +45,14 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         camera.Inputs(window);
-        camera.UpdateMatrix(45.0f, 0.1f, 100.f);
+        camera.UpdateMatrix(45.0f, 0.1f, 100.0f);
 
 
-        triangle.Draw(GL_TRIANGLES, camera.matrix);
-        square.Draw(GL_TRIANGLE_FAN, camera.matrix);
+        triangle.Draw(GL_TRIANGLES, camera);
+//        square.Draw(GL_TRIANGLE_FAN, camera);
+
+
+        triangle.Translate(window);
 
 
         glfwSwapBuffers(window);
@@ -56,7 +60,7 @@ int main() {
     }
 
     triangle.Delete();
-    square.Delete();
+//    square.Delete();
     glfwDestroyWindow(window);
     glfwTerminate();
 
