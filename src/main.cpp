@@ -3,6 +3,7 @@
 
 #include "game/Tangram.h"
 #include "game/Figure.h"
+#include "game/MousePicker.h"
 #include "camera/Camera.h"
 
 const GLuint WIDTH = 800;
@@ -37,6 +38,7 @@ int main() {
 //    Figure square(figureVertexSource, figureFragmentSource, figureTextureSource,CUBE2D_VERTICES, CUBE2D_INDICES);
 
     Camera camera(WIDTH, HEIGHT, glm::vec3(0.0f, 0.0f, 1.0f));
+    MousePicker mousePicker;
 
     glEnable(GL_DEPTH_TEST);
 
@@ -47,12 +49,13 @@ int main() {
         camera.Inputs(window);
         camera.UpdateMatrix(45.0f, 0.1f, 100.0f);
 
-
         triangle.Draw(GL_TRIANGLES, camera);
 //        square.Draw(GL_TRIANGLE_FAN, camera);
 
+        mousePicker.UpdateMatrices(camera);
+        mousePicker.MouseInput(window, WIDTH, HEIGHT);
 
-        triangle.Translate(window);
+//        triangle.Translate(window);
 
 
         glfwSwapBuffers(window);
