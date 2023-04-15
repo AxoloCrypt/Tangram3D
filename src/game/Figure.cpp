@@ -1,11 +1,16 @@
 #include "Figure.h"
 
-Figure::Figure(const char* vertexSource, const char* fragmentSource, const char* textureSource,std::vector<Vertex>& shape, std::vector<GLuint>& indices) {
+Figure::Figure(const char* vertexSource, const char* fragmentSource, const char* textureSource,
+               std::vector<Vertex>& shape, std::vector<GLuint>& indices, glm::vec3 position, glm::mat4 model) {
 
     this->shader = Shader(vertexSource, fragmentSource);
     this->shape = shape;
     this->indices = indices;
     this->texture = Texture(textureSource, 0);
+    this->position = position;
+    this-> model = model;
+
+    this->model = glm::translate(this->model, this->position);
 
     vao.Bind();
 
@@ -22,17 +27,34 @@ Figure::Figure(const char* vertexSource, const char* fragmentSource, const char*
 
 }
 
-void Figure::Draw(GLenum primitive, glm::mat4 cameraMatrix){
+void Figure::Draw(GLenum primitive, Camera& camera){
     texture.TextureUnit(shader, "tex0", 0);
     shader.Activate();
     texture.Bind();
     vao.Bind();
-    glUniformMatrix4fv(glGetUniformLocation(shader.ID, "cameraPosition"), 1, GL_FALSE, glm::value_ptr(cameraMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(shader.ID, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(glGetUniformLocation(shader.ID, "viewMatrix"), 1, GL_FALSE, glm::value_ptr(camera.view));
+    glUniformMatrix4fv(glGetUniformLocation(shader.ID, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(camera.projection));
     glDrawElements(primitive, indices.size(), GL_UNSIGNED_INT, 0);
 }
 
-void Figure::Translate() {
+void Figure::Translate(GLFWwindow* window) {
 
+    if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS){
+        double x;
+        double y;
+
+        glfwGetCursorPos(window, &x, &y);
+
+        std::cout << "Mouse x: " << x << " Mouse y: " << y << "\n";
+
+        float normalizedX = (2.0f * (float) x) / 800 - 1.0f;
+        float normalizedY = 1.0f - (2.0f * (float) y) / 650;
+
+        std::cout << "Normalized x: " << normalizedX << " Normalized y: " << normalizedY << "\n";
+
+
+    }
 }
 
 void Figure::Rotate() {
