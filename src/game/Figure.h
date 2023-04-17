@@ -3,6 +3,7 @@
 
 #include "../shader/Shader.h"
 #include "../camera/Camera.h"
+#include "../game/MousePicker.h"
 #include "gtc/type_ptr.hpp"
 #include <vector>
 
@@ -22,7 +23,7 @@ struct Figure {
 
 
    void Draw(GLenum primitive, Camera& camera);
-   void Translate(GLFWwindow* window);
+   void Translate(GLFWwindow* window, MousePicker& mousePicker);
    void Rotate();
    void Delete();
 
