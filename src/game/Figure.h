@@ -17,6 +17,8 @@ struct Figure {
    std::vector<GLuint> indices;
    glm::vec3 position;
    glm::mat4 model;
+   bool isPicked = false;
+
 
    explicit Figure(const char* vertexSource, const char* fragmentSource, const char* textureSource,
                    std::vector<Vertex>& shape, std::vector<GLuint>& indices, glm::vec3 position, glm::mat4 model);

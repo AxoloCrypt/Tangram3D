@@ -55,18 +55,29 @@ void Figure::Translate(GLFWwindow* window, MousePicker& mousePicker) {
         glm::vec3 mouseWorld = mousePicker.ViewPortToWorld(mouseX, mouseY, windowWidth, windowHeight);
 
 
+        std::cout << "Mouse world x: " << mouseWorld.x << " Mouse world y: " << mouseWorld.y << " Mouse world z: " <<
+        mouseWorld.z << std::endl;
 
-        if(MousePicker::rayIntersects(mousePicker.origin, mouseWorld, position, 0.5f)){
-
-//            position.x += mouseWorld.x;
-//            position.y += mouseWorld.y;
-
-            texture = Texture("../resources/textures/Paper_cream.png", 0);
-
-//            model = glm::translate(model, glm::vec3(mouseWorld.x, mouseWorld.y, 0.0f));
+        if (isPicked){
+            model = glm::mat4(1.0);
+            position = glm::vec3(mouseWorld.x * 8.5, mouseWorld.y * 8.5, position.z);
+            model = glm::translate(position);
         }
 
+        if(MousePicker::rayIntersects(mousePicker.origin, mouseWorld, position, 0.55f)){
+            isPicked = true;
+            texture = Texture("../resources/textures/Paper_cream.png", 0);
+        }
+
+
     }
+
+    if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE){
+        if (isPicked){
+            isPicked = false;
+        }
+    }
+
 
 }
 

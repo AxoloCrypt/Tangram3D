@@ -66,7 +66,6 @@ bool MousePicker::rayIntersects(glm::vec3 origin, glm::vec3 ray, glm::vec3 spher
     float t = b * b - c;
 
 
-    std::cout << "t = " << t << "\n";
 
     if(t == 0.0f){
        float rootT = -b +  std::sqrt(t);
