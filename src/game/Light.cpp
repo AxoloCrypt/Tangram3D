@@ -34,3 +34,10 @@ void Light::Illuminate(Camera& camera) {
     glUniform4f(glGetUniformLocation(shader.ID, "lightColor"), color.x, color.y, color.z, color.w);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
 }
+
+void Light::Delete() {
+    vao.Delete();
+    vbo.Delete();
+    ebo.Delete();
+    shader.Delete();
+}
