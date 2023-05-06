@@ -34,8 +34,9 @@ int main() {
     glViewport(0, 0, WIDTH, HEIGHT);
 
     Figure triangle(figureVertexSource, figureFragmentSource, figureTextureSource,EQUILATERAL_TRIANGLE_VERTICES,
-                    EQUILATERAL_TRIANGLE_INDICES, glm::vec3(0.0f, 0.0f, -5.0f), glm::mat4(1.0f));
-//    Figure square(figureVertexSource, figureFragmentSource, figureTextureSource,CUBE2D_VERTICES, CUBE2D_INDICES);
+                    EQUILATERAL_TRIANGLE_INDICES, glm::vec3(-2.0f, -2.0f, -5.0f), glm::mat4(1.0f));
+    Figure square(figureVertexSource, figureFragmentSource, figureTextureSource,CUBE2D_VERTICES, CUBE2D_INDICES,
+                  glm::vec3(-0.5f, -1.5f, -5.0f), glm::mat4(1.0f));
 
     Camera camera(WIDTH, HEIGHT, glm::vec3(0.0f, 0.0f, 1.0f));
     MousePicker mousePicker;
@@ -50,12 +51,12 @@ int main() {
         camera.UpdateMatrix(45.0f, 0.1f, 100.0f);
 
         triangle.Draw(GL_TRIANGLES, camera);
-//        square.Draw(GL_TRIANGLE_FAN, camera);
+        square.Draw(GL_TRIANGLE_FAN, camera);
 
         mousePicker.UpdateMatrices(camera);
-        mousePicker.MouseInput(window, WIDTH, HEIGHT);
 
-//        triangle.Translate(window);
+        triangle.Translate(window, mousePicker);
+        square.Translate(window, mousePicker);
 
 
         glfwSwapBuffers(window);
@@ -63,7 +64,7 @@ int main() {
     }
 
     triangle.Delete();
-//    square.Delete();
+    square.Delete();
     glfwDestroyWindow(window);
     glfwTerminate();
 

@@ -14,12 +14,12 @@
 };
 
 std::vector<Vertex> CUBE2D_VERTICES = {
-        Vertex{glm::vec3(-0.5, -0.5, -10.0), glm::vec3(1.0, 0.0, 0.0), glm::vec2(0.0, 0.0)},
-        Vertex{glm::vec3(0.5, 0.5, -10.0), glm::vec3(0.0, 1.0, 0.0), glm::vec2(0.0, 1.0f)},
-        Vertex{glm::vec3(-0.5, 0.5, -10.0), glm::vec3(0.0, 0.0, 1.0), glm::vec2(1.0, 0.0)},
-        Vertex{glm::vec3(-0.5, 0.5, -10.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0, 1.0)},
-        Vertex{glm::vec3(0.5, -0.5, -10.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0, 0.0)},
-        Vertex{glm::vec3(0.5, 0.5, -10.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0, 1.0)},
+        Vertex{glm::vec3(-0.5, -0.5, -1.0), glm::vec3(1.0, 0.0, 0.0), glm::vec2(0.0, 0.0)},
+        Vertex{glm::vec3(0.5, 0.5, -1.0), glm::vec3(0.0, 1.0, 0.0), glm::vec2(0.0, 1.0f)},
+        Vertex{glm::vec3(-0.5, 0.5, -1.0), glm::vec3(0.0, 0.0, 1.0), glm::vec2(1.0, 0.0)},
+        Vertex{glm::vec3(-0.5, 0.5, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0, 1.0)},
+        Vertex{glm::vec3(0.5, -0.5, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0, 0.0)},
+        Vertex{glm::vec3(0.5, 0.5, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0, 1.0)},
 };
 
 std::vector<GLuint> CUBE2D_INDICES = {

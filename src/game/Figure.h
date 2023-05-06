@@ -3,6 +3,7 @@
 
 #include "../shader/Shader.h"
 #include "../camera/Camera.h"
+#include "../game/MousePicker.h"
 #include "gtc/type_ptr.hpp"
 #include <vector>
 
@@ -16,13 +17,15 @@ struct Figure {
    std::vector<GLuint> indices;
    glm::vec3 position;
    glm::mat4 model;
+   bool isPicked = false;
+
 
    explicit Figure(const char* vertexSource, const char* fragmentSource, const char* textureSource,
                    std::vector<Vertex>& shape, std::vector<GLuint>& indices, glm::vec3 position, glm::mat4 model);
 
 
    void Draw(GLenum primitive, Camera& camera);
-   void Translate(GLFWwindow* window);
+   void Translate(GLFWwindow* window, MousePicker& mousePicker);
    void Rotate();
    void Delete();
 

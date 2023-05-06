@@ -38,23 +38,47 @@ void Figure::Draw(GLenum primitive, Camera& camera){
     glDrawElements(primitive, indices.size(), GL_UNSIGNED_INT, 0);
 }
 
-void Figure::Translate(GLFWwindow* window) {
+void Figure::Translate(GLFWwindow* window, MousePicker& mousePicker) {
 
     if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS){
-        double x;
-        double y;
 
-        glfwGetCursorPos(window, &x, &y);
+        double mouseX;
+        double mouseY;
 
-        std::cout << "Mouse x: " << x << " Mouse y: " << y << "\n";
+        glfwGetCursorPos(window, &mouseX, &mouseY);
 
-        float normalizedX = (2.0f * (float) x) / 800 - 1.0f;
-        float normalizedY = 1.0f - (2.0f * (float) y) / 650;
+        int windowWidth;
+        int windowHeight;
 
-        std::cout << "Normalized x: " << normalizedX << " Normalized y: " << normalizedY << "\n";
+        glfwGetWindowSize(window, &windowWidth, &windowHeight);
+
+        glm::vec3 mouseWorld = mousePicker.ViewPortToWorld(mouseX, mouseY, windowWidth, windowHeight);
+
+
+        std::cout << "Mouse world x: " << mouseWorld.x << " Mouse world y: " << mouseWorld.y << " Mouse world z: " <<
+        mouseWorld.z << std::endl;
+
+        if (isPicked){
+            model = glm::mat4(1.0);
+            position = glm::vec3(mouseWorld.x * 8.5, mouseWorld.y * 8.5, position.z);
+            model = glm::translate(position);
+        }
+
+        if(MousePicker::rayIntersects(mousePicker.origin, mouseWorld, position, 0.55f)){
+            isPicked = true;
+            texture = Texture("../resources/textures/Paper_cream.png", 0);
+        }
 
 
     }
+
+    if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE){
+        if (isPicked){
+            isPicked = false;
+        }
+    }
+
+
 }
 
 void Figure::Rotate() {
