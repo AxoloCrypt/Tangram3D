@@ -17,9 +17,10 @@ Figure::Figure(const char* vertexSource, const char* fragmentSource, const char*
     vbo = VBO(this->shape);
     ebo = EBO(this->indices);
 
-    vao.LinkAttribute(vbo, 0, 3, GL_FLOAT, 8 * sizeof(float), nullptr);
-    vao.LinkAttribute(vbo, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    vao.LinkAttribute(vbo, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    vao.LinkAttribute(vbo, 0, 3, GL_FLOAT, 11 * sizeof(float), nullptr);
+    vao.LinkAttribute(vbo, 1, 3, GL_FLOAT, 11 * sizeof(float), (void*)(3 * sizeof(float)));
+    vao.LinkAttribute(vbo, 2, 2, GL_FLOAT, 11 * sizeof(float), (void*)(6 * sizeof(float)));
+    vao.LinkAttribute(vbo, 3, 3, GL_FLOAT, 11 * sizeof(float), (void*)(8 * sizeof(float)));
 
     vao.Unbind();
     vbo.Unbind();
@@ -27,7 +28,7 @@ Figure::Figure(const char* vertexSource, const char* fragmentSource, const char*
 
 }
 
-void Figure::Draw(GLenum primitive, Camera& camera){
+void Figure::Draw(GLenum primitive, Camera& camera, Light& light){
     texture.TextureUnit(shader, "tex0", 0);
     shader.Activate();
     texture.Bind();
@@ -35,6 +36,9 @@ void Figure::Draw(GLenum primitive, Camera& camera){
     glUniformMatrix4fv(glGetUniformLocation(shader.ID, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(model));
     glUniformMatrix4fv(glGetUniformLocation(shader.ID, "viewMatrix"), 1, GL_FALSE, glm::value_ptr(camera.view));
     glUniformMatrix4fv(glGetUniformLocation(shader.ID, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(camera.projection));
+    glUniform4f(glGetUniformLocation(shader.ID, "lightColor"), light.color.x, light.color.y, light.color.z, light.color.w);
+    glUniform3f(glGetUniformLocation(shader.ID, "lightPosition"), light.position.x, light.position.y, light.position.z);
+    glUniform3f(glGetUniformLocation(shader.ID, "cameraPosition"), camera.position.x, camera.position.y, camera.position.z);
     glDrawElements(primitive, indices.size(), GL_UNSIGNED_INT, 0);
 }
 

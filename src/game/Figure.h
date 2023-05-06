@@ -3,7 +3,8 @@
 
 #include "../shader/Shader.h"
 #include "../camera/Camera.h"
-#include "../game/MousePicker.h"
+#include "MousePicker.h"
+#include "Light.h"
 #include "gtc/type_ptr.hpp"
 #include <vector>
 
@@ -24,7 +25,7 @@ struct Figure {
                    std::vector<Vertex>& shape, std::vector<GLuint>& indices, glm::vec3 position, glm::mat4 model);
 
 
-   void Draw(GLenum primitive, Camera& camera);
+   void Draw(GLenum primitive, Camera& camera, Light& light);
    void Translate(GLFWwindow* window, MousePicker& mousePicker);
    void Rotate();
    void Delete();
