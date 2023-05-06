@@ -4,9 +4,9 @@
 #include "../shader/Shader.h"
 
  std::vector<Vertex> EQUILATERAL_TRIANGLE_VERTICES = {
-        Vertex{glm::vec3(0.5, 0.0, -1.0), glm::vec3(1.0, 0.0, 0.0), glm::vec2(0.0, 1.0)},
-        Vertex{glm::vec3(-0.5, 0.0, -1.0), glm::vec3(0.0, 1.0, 0.0), glm::vec2(0.0, 2.0)},
-        Vertex{glm::vec3(0.0, 0.5, -1.0), glm::vec3(0.0, 0.0, 1.0), glm::vec2 (0.5, 2.4)},
+        Vertex{glm::vec3(0.5, 0.0, -1.0), glm::vec3(1.0, 0.0, 0.0), glm::vec2(0.0, 1.0), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(-0.5, 0.0, -1.0), glm::vec3(0.0, 1.0, 0.0), glm::vec2(0.0, 2.0), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(0.0, 0.5, -1.0), glm::vec3(0.0, 0.0, 1.0), glm::vec2 (0.5, 2.4), glm::vec3(0.0, -1.0, 0.0)},
 };
 
  std::vector<GLuint> EQUILATERAL_TRIANGLE_INDICES = {
@@ -14,12 +14,12 @@
 };
 
 std::vector<Vertex> CUBE2D_VERTICES = {
-        Vertex{glm::vec3(-0.5, -0.5, -1.0), glm::vec3(1.0, 0.0, 0.0), glm::vec2(0.0, 0.0)},
-        Vertex{glm::vec3(0.5, 0.5, -1.0), glm::vec3(0.0, 1.0, 0.0), glm::vec2(0.0, 1.0f)},
-        Vertex{glm::vec3(-0.5, 0.5, -1.0), glm::vec3(0.0, 0.0, 1.0), glm::vec2(1.0, 0.0)},
-        Vertex{glm::vec3(-0.5, 0.5, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0, 1.0)},
-        Vertex{glm::vec3(0.5, -0.5, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0, 0.0)},
-        Vertex{glm::vec3(0.5, 0.5, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0, 1.0)},
+        Vertex{glm::vec3(-0.5, -0.5, -1.0), glm::vec3(1.0, 0.0, 0.0), glm::vec2(0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(0.5, 0.5, -1.0), glm::vec3(0.0, 1.0, 0.0), glm::vec2(0.0, 1.0f), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(-0.5, 0.5, -1.0), glm::vec3(0.0, 0.0, 1.0), glm::vec2(1.0, 0.0), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(-0.5, 0.5, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0, 1.0), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(0.5, -0.5, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0, 0.0), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(0.5, 0.5, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0, 1.0), glm::vec3(0.0, -1.0, 0.0)},
 };
 
 std::vector<GLuint> CUBE2D_INDICES = {
@@ -27,10 +27,10 @@ std::vector<GLuint> CUBE2D_INDICES = {
 };
 
 std::vector<Vertex> TABLE_VERTICES = {
-        Vertex{glm::vec3(-6.0, -2.5, -6.5), glm::vec3(1.0, 1.0, 1.0), glm::vec2(1.0, 1.0)},
-        Vertex{glm::vec3(6.0, -2.5, -6.5), glm::vec3(1.0, 1.0, 1.0), glm::vec2(1.0, 0.0)},
-        Vertex{glm::vec3(-6.0, 5.0, -6.5), glm::vec3(1.0, 1.0, 1.0), glm::vec2(0.0, 1.0)},
-        Vertex{glm::vec3(6.0, 5.0, -6.5), glm::vec3(1.0, 1.0, 1.0), glm::vec2(0.0, 0.0)},
+        Vertex{glm::vec3(-6.0, -2.5, -6.5), glm::vec3(1.0, 1.0, 1.0), glm::vec2(1.0, 1.0), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(6.0, -2.5, -6.5), glm::vec3(1.0, 1.0, 1.0), glm::vec2(1.0, 0.0), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(-6.0, 5.0, -6.5), glm::vec3(1.0, 1.0, 1.0), glm::vec2(0.0, 1.0), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(6.0, 5.0, -6.5), glm::vec3(1.0, 1.0, 1.0), glm::vec2(0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)},
 };
 
 std::vector<GLuint> TABLE_INDICES = {
