@@ -38,6 +38,9 @@ int main() {
     Figure square(figureVertexSource, figureFragmentSource, figureTextureSource,SQUARE_VERTICES, SQUARE_INDICES,
                   glm::vec3(-0.5f, -1.5f, -5.0f), glm::mat4(1.0f));
 
+    Figure table(figureVertexSource, figureFragmentSource, "../resources/textures/planks.png", TABLE_VERTICES, TABLE_INDICES,
+                 glm::vec3(0.0, 0.0, -5.0), glm::mat4(1.0));
+
     Camera camera(WIDTH, HEIGHT, glm::vec3(0.0f, 0.0f, 1.0f));
     MousePicker mousePicker;
 
@@ -52,6 +55,7 @@ int main() {
 
         triangle.Draw(GL_TRIANGLES, camera);
         square.Draw(GL_TRIANGLE_FAN, camera);
+        table.Draw(GL_TRIANGLES, camera);
 
         mousePicker.UpdateMatrices(camera);
 
@@ -65,6 +69,7 @@ int main() {
 
     triangle.Delete();
     square.Delete();
+    table.Delete();
     glfwDestroyWindow(window);
     glfwTerminate();
 
