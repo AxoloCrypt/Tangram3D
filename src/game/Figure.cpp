@@ -12,6 +12,8 @@ Figure::Figure(const char* vertexSource, const char* fragmentSource, const char*
 
     this->model = glm::translate(this->model, this->position);
 
+    hasSpecular = nullptr;
+
     vao.Bind();
 
     vbo = VBO(this->shape);
@@ -28,8 +30,46 @@ Figure::Figure(const char* vertexSource, const char* fragmentSource, const char*
 
 }
 
+
+Figure::Figure(const char *vertexSource, const char *fragmentSource, const char *textureSource,
+               const char *specularTextureSource, std::vector<Vertex> &shape, std::vector<GLuint> &indices,
+               glm::vec3 position, glm::mat4 model) {
+
+    this->shader = Shader(vertexSource, fragmentSource);
+    this->shape = shape;
+    this->indices = indices;
+    this->texture = Texture(textureSource, 0);
+    this->specularTexture = Texture(specularTextureSource, 1);
+    this->position = position;
+    this-> model = model;
+
+    this->model = glm::translate(this->model, this->position);
+
+    hasSpecular = &this->specularTexture;
+
+    vao.Bind();
+
+    vbo = VBO(this->shape);
+    ebo = EBO(this->indices);
+
+    vao.LinkAttribute(vbo, 0, 3, GL_FLOAT, 11 * sizeof(float), nullptr);
+    vao.LinkAttribute(vbo, 1, 3, GL_FLOAT, 11 * sizeof(float), (void*)(3 * sizeof(float)));
+    vao.LinkAttribute(vbo, 2, 2, GL_FLOAT, 11 * sizeof(float), (void*)(6 * sizeof(float)));
+    vao.LinkAttribute(vbo, 3, 3, GL_FLOAT, 11 * sizeof(float), (void*)(8 * sizeof(float)));
+
+    vao.Unbind();
+    vbo.Unbind();
+    ebo.Unbind();
+}
+
+
 void Figure::Draw(GLenum primitive, Camera& camera, Light& light){
     texture.TextureUnit(shader, "tex0", 0);
+
+    if(hasSpecular != nullptr){
+        specularTexture.TextureUnit(shader, "tex1", 1);
+    }
+
     shader.Activate();
     texture.Bind();
     vao.Bind();
@@ -66,6 +106,7 @@ void Figure::Translate(GLFWwindow* window, MousePicker& mousePicker) {
             model = glm::mat4(1.0);
             position = glm::vec3(mouseWorld.x * 8.5, mouseWorld.y * 8.5, position.z);
             model = glm::translate(position);
+            model = glm::rotate(model, angle, glm::vec3(0.0, 0.0, 1.0));
         }
 
         if(MousePicker::rayIntersects(mousePicker.origin, mouseWorld, position, 0.35f)){
@@ -82,11 +123,23 @@ void Figure::Translate(GLFWwindow* window, MousePicker& mousePicker) {
         }
     }
 
-
 }
 
-void Figure::Rotate() {
+void Figure::Rotate(GLFWwindow* window) {
 
+    if(glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS){
+       if(isPicked){
+            angle += 0.01f;
+            model = glm::rotate(model, angle, glm::vec3(0.0, 0.0, 1.0));
+       }
+    }
+
+    if(glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS){
+        if(isPicked){
+            angle -= 0.01f;
+            model = glm::rotate(model, angle, glm::vec3(0.0, 0.0, 1.0));
+        }
+    }
 }
 
 void Figure::Delete() {
@@ -96,3 +149,4 @@ void Figure::Delete() {
     texture.Delete();
     shader.Delete();
 }
+

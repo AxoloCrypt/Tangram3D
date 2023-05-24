@@ -15,6 +15,7 @@ const char* lightVertexSource = "../src/glsl/light.vert";
 const char* lightFragmentSource = "../src/glsl/light.frag";
 const char* figureTextureSource = "../resources/textures/Paper_cream_grid_blue.png";
 const char* tableTextureSource = "../resources/textures/planks.png";
+const char* tableSpecularTextureSource = "../resources/textures/planksSpec.png";
 
 int main() {
     glfwInit();
@@ -42,11 +43,11 @@ int main() {
     Figure square(figureVertexSource, figureFragmentSource, figureTextureSource,SQUARE_VERTICES, SQUARE_INDICES,
                   glm::vec3(-0.5f, -1.5f, -5.0f), glm::mat4(1.0f));
 
-    Figure table(figureVertexSource, figureFragmentSource, tableTextureSource, TABLE_VERTICES, TABLE_INDICES,
+    Figure table(figureVertexSource, "../src/glsl/figureSpecular.frag", tableTextureSource, tableSpecularTextureSource ,TABLE_VERTICES, TABLE_INDICES,
                  glm::vec3(0.0, 0.0, -5.0), glm::mat4(1.0));
 
     Light light(lightVertexSource, lightFragmentSource, LIGHT_VERTICES, LIGHT_INDICES, glm::vec4(1.0, 1.0, 1.0, 1.0),
-          glm::vec3(0.0, -1.0, -3.0), glm::mat4(1.0));
+          glm::vec3(0.0, 0.0, -3.0), glm::mat4(1.0));
 
     Camera camera(WIDTH, HEIGHT, glm::vec3(0.0f, 0.0f, 1.0f));
     MousePicker mousePicker;
@@ -66,10 +67,13 @@ int main() {
         table.Draw(GL_TRIANGLES, camera, light);
 
 
+
         mousePicker.UpdateMatrices(camera);
 
         triangle.Translate(window, mousePicker);
+        triangle.Rotate(window);
         square.Translate(window, mousePicker);
+        square.Rotate(window);
 
 
         glfwSwapBuffers(window);

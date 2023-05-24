@@ -16,7 +16,7 @@ struct Light {
     glm::mat4 model{};
     std::vector<GLuint> indices;
 
-    Light(const char* vertexSource, const char* fragmentSource, std::vector<Vertex> lightVertices, std::vector<GLuint> lightIndices,
+    Light(const char* vertexSource, const char* fragmentSource, std::vector<LightVertex> lightVertices, std::vector<GLuint> lightIndices,
           glm::vec4 color, glm::vec3 position, glm::mat4 model);
 
     void Illuminate(Camera& camera);

@@ -2,13 +2,15 @@
 
 #include <utility>
 
-Light::Light(const char *vertexSource, const char *fragmentSource, std::vector<Vertex> lightVertices,
+Light::Light(const char *vertexSource, const char *fragmentSource, std::vector<LightVertex> lightVertices,
              std::vector<GLuint> lightIndices, glm::vec4 color, glm::vec3 position, glm::mat4 model) {
 
     this->color = color;
     this->position = position;
     this->model = model;
     this->indices = std::move(lightIndices);
+
+    this->model = glm::translate(this->model, this->position);
 
     shader = Shader(vertexSource, fragmentSource);
     vao.Bind();
