@@ -13,6 +13,27 @@
         0, 1, 2,
 };
 
+
+std::vector<Vertex> bigEquilateralTriangleVertices = {
+        Vertex{glm::vec3(0.8, 0.0, -1.0), glm::vec3(1.0, 0.0, 0.0), glm::vec2(0.0, 1.0), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(-0.8, 0.0, -1.0), glm::vec3(0.0, 1.0, 0.0), glm::vec2(0.0, 2.0), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(0.0, 0.8, -1.0), glm::vec3(0.0, 0.0, 1.0), glm::vec2 (0.5, 2.4), glm::vec3(0.0, -1.0, 0.0)},
+};
+
+std::vector<GLuint> bigEquilateralTriangleIndices = {
+        0, 1, 2,
+};
+
+std::vector<Vertex> mediumEquilateralTriangleVertices = {
+        Vertex{glm::vec3(0.8, 0.0, -1.0), glm::vec3(1.0, 0.0, 0.0), glm::vec2(0.0, 1.0), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(-0.8, 0.0, -1.0), glm::vec3(0.0, 1.0, 0.0), glm::vec2(0.0, 2.0), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(0.0, 0.8, -1.0), glm::vec3(0.0, 0.0, 1.0), glm::vec2 (0.5, 2.4), glm::vec3(0.0, -1.0, 0.0)},
+};
+
+std::vector<GLuint> mediumEquilateralTriangleIndices = {
+        0, 1, 2,
+};
+
 std::vector<Vertex> squareVertices = {
         Vertex{glm::vec3(-0.5, -0.5, -1.0), glm::vec3(1.0, 0.0, 0.0), glm::vec2(0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)},
         Vertex{glm::vec3(0.5, 0.5, -1.0), glm::vec3(0.0, 1.0, 0.0), glm::vec2(0.0, 1.0f), glm::vec3(0.0, -1.0, 0.0)},
@@ -24,6 +45,19 @@ std::vector<Vertex> squareVertices = {
 
 std::vector<GLuint> squareIndices = {
         0, 1, 2, 3, 4, 5
+};
+
+
+std::vector<Vertex> rombhoidVertices = {
+        Vertex{glm::vec3(-1.0, 0.0, -1.0), glm::vec3(1.0, 1.0, 1.0), glm::vec2(1.0, 1.0), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(0.5, 0.0, -1.0), glm::vec3(1.0, 1.0, 1.0), glm::vec2(1.0, 0.0), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(-0.5, 0.5, -1.0), glm::vec3(1.0, 1.0, 1.0), glm::vec2(0.0, 1.0), glm::vec3(0.0, -1.0, 0.0)},
+        Vertex{glm::vec3(1.0, 0.5, -1.0), glm::vec3(1.0, 1.0, 1.0), glm::vec2(0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)},
+};
+
+std::vector<GLuint> rombhoidIndices = {
+        0, 1, 2,
+        1, 3, 2,
 };
 
 std::vector<Vertex> tableVertices = {
@@ -73,7 +107,11 @@ std::vector<GLuint> lightIndices = {
 #define TABLE_INDICES tableIndices
 #define LIGHT_VERTICES lightVertices
 #define LIGHT_INDICES lightIndices
-
-
+#define BIG_TRIANGLE_VERTICES bigEquilateralTriangleVertices
+#define BIG_TRIANGLE_INDICES bigEquilateralTriangleIndices
+#define MEDIUM_TRIANGLE_VERTICES mediumEquilateralTriangleVertices
+#define MEDIUM_TRIANGLE_INDICES mediumEquilateralTriangleIndices
+#define RHOMBOID_VERTICES rombhoidVertices
+#define ROMBHOID_INDICES rombhoidIndices
 
 #endif //TANGRAM3D_TANGRAM_H

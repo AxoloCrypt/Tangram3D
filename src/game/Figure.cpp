@@ -99,14 +99,14 @@ void Figure::Translate(GLFWwindow* window, MousePicker& mousePicker) {
         glm::vec3 mouseWorld = mousePicker.ViewPortToWorld(mouseX, mouseY, windowWidth, windowHeight);
 
 
-        std::cout << "Mouse world x: " << mouseWorld.x << " Mouse world y: " << mouseWorld.y << " Mouse world z: " <<
-        mouseWorld.z << std::endl;
+//        std::cout << "Mouse world x: " << mouseWorld.x << " Mouse world y: " << mouseWorld.y << " Mouse world z: " <<
+//        mouseWorld.z << std::endl;
 
         if (isPicked){
             model = glm::mat4(1.0);
             position = glm::vec3(mouseWorld.x * 8.5, mouseWorld.y * 8.5, position.z);
             model = glm::translate(position);
-            model = glm::rotate(model, angle, glm::vec3(0.0, 0.0, 1.0));
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0, 0.0, 1.0));
         }
 
         if(MousePicker::rayIntersects(mousePicker.origin, mouseWorld, position, 0.35f)){
@@ -129,15 +129,17 @@ void Figure::Rotate(GLFWwindow* window) {
 
     if(glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS){
        if(isPicked){
-            angle += 0.01f;
-            model = glm::rotate(model, angle, glm::vec3(0.0, 0.0, 1.0));
+           std::cout << angle << "\n";
+            angle += 1.0f;
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0, 0.0, 1.0));
        }
     }
 
     if(glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS){
         if(isPicked){
-            angle -= 0.01f;
-            model = glm::rotate(model, angle, glm::vec3(0.0, 0.0, 1.0));
+            std::cout << angle << "\n";
+            angle -= 1.0f;
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0, 0.0, 1.0));
         }
     }
 }

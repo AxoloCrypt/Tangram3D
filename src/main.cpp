@@ -38,16 +38,32 @@ int main() {
 
     glViewport(0, 0, WIDTH, HEIGHT);
 
+    Figure bigTriangle(figureVertexSource, figureFragmentSource, figureTextureSource,BIG_TRIANGLE_VERTICES,
+                    BIG_TRIANGLE_INDICES, glm::vec3(2.0f, -2.0f, -5.0f), glm::mat4(1.0f));
+
+    Figure bigTriangle2(figureVertexSource, figureFragmentSource, figureTextureSource,BIG_TRIANGLE_VERTICES,
+                    BIG_TRIANGLE_INDICES, glm::vec3(2.0f, -1.0f, -5.0f), glm::mat4(1.0f));
+
     Figure triangle(figureVertexSource, figureFragmentSource, figureTextureSource,EQUILATERAL_TRIANGLE_VERTICES,
                     EQUILATERAL_TRIANGLE_INDICES, glm::vec3(-2.0f, -2.0f, -5.0f), glm::mat4(1.0f));
+
+    Figure triangle2(figureVertexSource, figureFragmentSource, figureTextureSource,EQUILATERAL_TRIANGLE_VERTICES,
+                    EQUILATERAL_TRIANGLE_INDICES, glm::vec3(-2.0f, -1.0f, -5.0f), glm::mat4(1.0f));
+
+    Figure mediumTriangle(figureVertexSource, figureFragmentSource, figureTextureSource, MEDIUM_TRIANGLE_VERTICES,
+                          MEDIUM_TRIANGLE_INDICES, glm::vec3(-2.0f, 0.0f, -5.0f), glm::mat4(1.0f));
+
     Figure square(figureVertexSource, figureFragmentSource, figureTextureSource,SQUARE_VERTICES, SQUARE_INDICES,
                   glm::vec3(-0.5f, -1.5f, -5.0f), glm::mat4(1.0f));
 
     Figure table(figureVertexSource, "../src/glsl/figureSpecular.frag", tableTextureSource, tableSpecularTextureSource ,TABLE_VERTICES, TABLE_INDICES,
                  glm::vec3(0.0, 0.0, -5.0), glm::mat4(1.0));
 
+    Figure rhomboid(figureVertexSource, "../src/glsl/figureSpecular.frag", figureTextureSource, RHOMBOID_VERTICES, ROMBHOID_INDICES,
+                    glm::vec3(0.0, 0.0, -4.0), glm::mat4(1.0));
+
     Light light(lightVertexSource, lightFragmentSource, LIGHT_VERTICES, LIGHT_INDICES, glm::vec4(1.0, 1.0, 1.0, 1.0),
-          glm::vec3(0.0, 0.0, -3.0), glm::mat4(1.0));
+          glm::vec3(0.0, -3.0, 3.0), glm::mat4(1.0));
 
     Camera camera(WIDTH, HEIGHT, glm::vec3(0.0f, 0.0f, 1.0f));
     MousePicker mousePicker;
@@ -63,7 +79,12 @@ int main() {
 
         light.Illuminate(camera);
         triangle.Draw(GL_TRIANGLES, camera, light);
+        triangle2.Draw(GL_TRIANGLES, camera, light);
+        bigTriangle.Draw(GL_TRIANGLES, camera, light);
+        bigTriangle2.Draw(GL_TRIANGLES, camera, light);
+        mediumTriangle.Draw(GL_TRIANGLES, camera, light);
         square.Draw(GL_TRIANGLE_FAN, camera, light);
+        rhomboid.Draw(GL_TRIANGLES, camera, light);
         table.Draw(GL_TRIANGLES, camera, light);
 
 
@@ -72,8 +93,18 @@ int main() {
 
         triangle.Translate(window, mousePicker);
         triangle.Rotate(window);
+        triangle2.Translate(window, mousePicker);
+        triangle2.Rotate(window);
+        bigTriangle.Translate(window, mousePicker);
+        bigTriangle.Rotate(window);
+        bigTriangle2.Translate(window, mousePicker);
+        bigTriangle2.Rotate(window);
+        mediumTriangle.Translate(window, mousePicker);
+        mediumTriangle.Rotate(window);
         square.Translate(window, mousePicker);
         square.Rotate(window);
+        rhomboid.Translate(window, mousePicker);
+        rhomboid.Rotate(window);
 
 
         glfwSwapBuffers(window);
@@ -81,6 +112,9 @@ int main() {
     }
 
     triangle.Delete();
+    triangle2.Delete();
+    bigTriangle.Delete();
+    bigTriangle2.Delete();
     square.Delete();
     table.Delete();
     light.Delete();
