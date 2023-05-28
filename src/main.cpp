@@ -21,6 +21,11 @@ const char* figureTextureSource = "../resources/textures/Paper_cream_grid_blue.p
 const char* tableTextureSource = "../resources/textures/planks.png";
 const char* tableSpecularTextureSource = "../resources/textures/planksSpec.png";
 const char* tangramFigureTextureSource = "../resources/textures/tangramFigure.jpg";
+const char* cyanColorTexture = "../resources/textures/cyan.jpg";
+const char* greenColorTexture = "../resources/textures/green.png";
+const char* orangeColorTexture = "../resources/textures/orange.jpg";
+const char* redColorTexture = "../resources/textures/red.png";
+const char* purpleColorTexture = "../resources/textures/purple.jpg";
 
 short CURRENT_TANGRAM = 0;
 bool isLeftKeyPressed = false;
@@ -79,28 +84,28 @@ int main() {
 
     glViewport(0, 0, WIDTH, HEIGHT);
 
-    Figure bigTriangle(figureVertexSource, figureFragmentSource, figureTextureSource,BIG_TRIANGLE_VERTICES,
+    Figure bigTriangle(figureVertexSource, figureFragmentSource, cyanColorTexture,BIG_TRIANGLE_VERTICES,
                     BIG_TRIANGLE_INDICES, glm::vec3(4.0f, -3.0f, -9.0f), glm::mat4(1.0f));
 
-    Figure bigTriangle2(figureVertexSource, figureFragmentSource, figureTextureSource,BIG_TRIANGLE_VERTICES,
+    Figure bigTriangle2(figureVertexSource, figureFragmentSource, redColorTexture,BIG_TRIANGLE_VERTICES,
                     BIG_TRIANGLE_INDICES, glm::vec3(4.0f, -1.0f, -9.0f), glm::mat4(1.0f));
 
-    Figure triangle(figureVertexSource, figureFragmentSource, figureTextureSource,EQUILATERAL_TRIANGLE_VERTICES,
+    Figure triangle(figureVertexSource, figureFragmentSource, orangeColorTexture,EQUILATERAL_TRIANGLE_VERTICES,
                     EQUILATERAL_TRIANGLE_INDICES, glm::vec3(-4.0f, -3.0f, -9.0f), glm::mat4(1.0f));
 
-    Figure triangle2(figureVertexSource, figureFragmentSource, figureTextureSource,EQUILATERAL_TRIANGLE_VERTICES,
+    Figure triangle2(figureVertexSource, figureFragmentSource, greenColorTexture,EQUILATERAL_TRIANGLE_VERTICES,
                     EQUILATERAL_TRIANGLE_INDICES, glm::vec3(-4.0f, -1.0f, -9.0f), glm::mat4(1.0f));
 
-    Figure mediumTriangle(figureVertexSource, figureFragmentSource, figureTextureSource, MEDIUM_TRIANGLE_VERTICES,
+    Figure mediumTriangle(figureVertexSource, figureFragmentSource, purpleColorTexture, MEDIUM_TRIANGLE_VERTICES,
                           MEDIUM_TRIANGLE_INDICES, glm::vec3(-4.0f, 1.0f, -9.0f), glm::mat4(1.0f));
 
-     Figure square(figureVertexSource, figureFragmentSource, figureTextureSource,SMALL_SQUARE_VERTICES, SQUARE_INDICES,
+     Figure square(figureVertexSource, figureFragmentSource, greenColorTexture,SMALL_SQUARE_VERTICES, SQUARE_INDICES,
                   glm::vec3(0.0f, -2.5f, -9.0f), glm::mat4(1.0f));
 
     Figure table(figureVertexSource, "../src/glsl/figureSpecular.frag", tableTextureSource, tableSpecularTextureSource ,TABLE_VERTICES, TABLE_INDICES,
                  glm::vec3(0.0, 0.0, -5.0), glm::mat4(1.0));
 
-    Figure rhomboid(figureVertexSource, "../src/glsl/figureSpecular.frag", figureTextureSource, RHOMBOID_VERTICES, ROMBHOID_INDICES,
+    Figure rhomboid(figureVertexSource, figureFragmentSource,redColorTexture, RHOMBOID_VERTICES, ROMBHOID_INDICES,
                     glm::vec3(4.0, 1.0, -9.0), glm::mat4(1.0));
 
     Light light(lightVertexSource, lightFragmentSource, LIGHT_VERTICES, LIGHT_INDICES, glm::vec4(1.0, 1.0, 1.0, 1.0),

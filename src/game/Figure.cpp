@@ -142,7 +142,6 @@ void Figure::Translate(GLFWwindow* window, MousePicker& mousePicker) {
 
         if(MousePicker::rayIntersects(mousePicker.origin, mouseWorld, position, 0.35f)){
             isPicked = true;
-            texture = Texture("../resources/textures/Paper_cream.png", 0);
         }
 
 
