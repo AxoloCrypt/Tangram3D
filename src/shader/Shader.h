@@ -33,12 +33,16 @@ struct Vertex {
     glm::vec3 normal;
 };
 
+struct LightVertex {
+    glm::vec3 position;
+};
 
 struct VBO{
     GLuint ID;
 
     VBO();
     VBO(std::vector<Vertex>& vertices);
+    VBO(std::vector<LightVertex>& lightVertices);
 
     void Bind();
     void Unbind();

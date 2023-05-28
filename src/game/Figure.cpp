@@ -9,8 +9,11 @@ Figure::Figure(const char* vertexSource, const char* fragmentSource, const char*
     this->texture = Texture(textureSource, 0);
     this->position = position;
     this-> model = model;
+    this->originalPosition = this->position;
 
     this->model = glm::translate(this->model, this->position);
+
+    hasSpecular = nullptr;
 
     vao.Bind();
 
@@ -28,8 +31,79 @@ Figure::Figure(const char* vertexSource, const char* fragmentSource, const char*
 
 }
 
+
+Figure::Figure(const char *vertexSource, const char *fragmentSource, const char *textureSource,
+               const char *specularTextureSource, std::vector<Vertex> &shape, std::vector<GLuint> &indices,
+               glm::vec3 position, glm::mat4 model) {
+
+    this->shader = Shader(vertexSource, fragmentSource);
+    this->shape = shape;
+    this->indices = indices;
+    this->texture = Texture(textureSource, 0);
+    this->specularTexture = Texture(specularTextureSource, 1);
+    this->position = position;
+    this-> model = model;
+    this->originalPosition = this->position;
+
+    this->model = glm::translate(this->model, this->position);
+
+    hasSpecular = &this->specularTexture;
+
+    vao.Bind();
+
+    vbo = VBO(this->shape);
+    ebo = EBO(this->indices);
+
+    vao.LinkAttribute(vbo, 0, 3, GL_FLOAT, 11 * sizeof(float), nullptr);
+    vao.LinkAttribute(vbo, 1, 3, GL_FLOAT, 11 * sizeof(float), (void*)(3 * sizeof(float)));
+    vao.LinkAttribute(vbo, 2, 2, GL_FLOAT, 11 * sizeof(float), (void*)(6 * sizeof(float)));
+    vao.LinkAttribute(vbo, 3, 3, GL_FLOAT, 11 * sizeof(float), (void*)(8 * sizeof(float)));
+
+    vao.Unbind();
+    vbo.Unbind();
+    ebo.Unbind();
+}
+
+Figure::Figure(const char *vertexSource, const char *fragmentSource, const char *textureSource,
+               std::vector<Vertex> &shape, std::vector<GLuint> &indices, glm::vec3 position, glm::mat4 model,
+               float angle) {
+
+    this->shader = Shader(vertexSource, fragmentSource);
+    this->shape = shape;
+    this->indices = indices;
+    this->texture = Texture(textureSource, 0);
+    this->position = position;
+    this-> model = model;
+    this->originalPosition = this->position;
+
+    this->model = glm::translate(this->model, this->position);
+    this->model = glm::rotate(this->model, glm::radians(angle), glm::vec3(0.0, 0.0, 1.0));
+
+    hasSpecular = &this->specularTexture;
+
+    vao.Bind();
+
+    vbo = VBO(this->shape);
+    ebo = EBO(this->indices);
+
+    vao.LinkAttribute(vbo, 0, 3, GL_FLOAT, 11 * sizeof(float), nullptr);
+    vao.LinkAttribute(vbo, 1, 3, GL_FLOAT, 11 * sizeof(float), (void*)(3 * sizeof(float)));
+    vao.LinkAttribute(vbo, 2, 2, GL_FLOAT, 11 * sizeof(float), (void*)(6 * sizeof(float)));
+    vao.LinkAttribute(vbo, 3, 3, GL_FLOAT, 11 * sizeof(float), (void*)(8 * sizeof(float)));
+
+    vao.Unbind();
+    vbo.Unbind();
+    ebo.Unbind();
+}
+
+
 void Figure::Draw(GLenum primitive, Camera& camera, Light& light){
     texture.TextureUnit(shader, "tex0", 0);
+
+    if(hasSpecular != nullptr){
+        specularTexture.TextureUnit(shader, "tex1", 1);
+    }
+
     shader.Activate();
     texture.Bind();
     vao.Bind();
@@ -59,18 +133,15 @@ void Figure::Translate(GLFWwindow* window, MousePicker& mousePicker) {
         glm::vec3 mouseWorld = mousePicker.ViewPortToWorld(mouseX, mouseY, windowWidth, windowHeight);
 
 
-        std::cout << "Mouse world x: " << mouseWorld.x << " Mouse world y: " << mouseWorld.y << " Mouse world z: " <<
-        mouseWorld.z << std::endl;
-
         if (isPicked){
             model = glm::mat4(1.0);
             position = glm::vec3(mouseWorld.x * 8.5, mouseWorld.y * 8.5, position.z);
             model = glm::translate(position);
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0, 0.0, 1.0));
         }
 
         if(MousePicker::rayIntersects(mousePicker.origin, mouseWorld, position, 0.35f)){
             isPicked = true;
-            texture = Texture("../resources/textures/Paper_cream.png", 0);
         }
 
 
@@ -82,11 +153,25 @@ void Figure::Translate(GLFWwindow* window, MousePicker& mousePicker) {
         }
     }
 
-
 }
 
-void Figure::Rotate() {
+void Figure::Rotate(GLFWwindow* window) {
 
+    if(glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS){
+       if(isPicked){
+           std::cout << angle << "\n";
+            angle += 1.0f;
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0, 0.0, 1.0));
+       }
+    }
+
+    if(glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS){
+        if(isPicked){
+            std::cout << angle << "\n";
+            angle -= 1.0f;
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0, 0.0, 1.0));
+        }
+    }
 }
 
 void Figure::Delete() {
@@ -96,3 +181,13 @@ void Figure::Delete() {
     texture.Delete();
     shader.Delete();
 }
+
+void Figure::Restart() {
+    model = glm::mat4(1.0f);
+    position = originalPosition;
+    angle = 0.0f;
+    model = glm::translate(model,position);
+    model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0, 0.0, 1.0));
+}
+
+
