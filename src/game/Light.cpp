@@ -43,3 +43,7 @@ void Light::Delete() {
     ebo.Delete();
     shader.Delete();
 }
+
+void Light::ChangeColor(glm::vec4 newColor) {
+    color = newColor;
+}

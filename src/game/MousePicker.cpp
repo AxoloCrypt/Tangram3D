@@ -10,22 +10,6 @@ void MousePicker::UpdateMatrices(Camera &camera) {
     origin = camera.position;
 }
 
-//void MousePicker::MouseInput(GLFWwindow *window, GLuint windowWidth, GLuint windowHeight) {
-//
-//    if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS){
-//        double x;
-//        double y;
-//
-//        glfwGetCursorPos(window, &x, &y);
-//
-//        glm::vec3 worldCoordinates = ViewPortToWorld(x, y, windowWidth, windowHeight);
-//
-//        std::cout << "World x: " << worldCoordinates.x << " World y: " << worldCoordinates.y << " World z: "
-//        << worldCoordinates.z << "\n";
-//
-//    }
-//
-//}
 
 glm::vec3 MousePicker::ViewPortToWorld(double mouseX, double mouseY, GLuint windowWidth, GLuint windowHeight) {
 

@@ -60,7 +60,7 @@ vec4 directLight(){
 }
 
 vec4 defaultLight(){
-    float ambient = 0.20f;
+    float ambient = 0.02f;
 
     //diffuse
     vec3 normal = normalize(figureNormal);

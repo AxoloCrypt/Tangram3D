@@ -19,6 +19,7 @@ struct Figure {
    std::vector<Vertex> shape;
    std::vector<GLuint> indices;
    glm::vec3 position;
+   glm::vec3 originalPosition;
    glm::mat4 model;
    bool isPicked = false;
    float angle = 0.0f;
@@ -26,6 +27,10 @@ struct Figure {
 
    explicit Figure(const char* vertexSource, const char* fragmentSource, const char* textureSource,
                    std::vector<Vertex>& shape, std::vector<GLuint>& indices, glm::vec3 position, glm::mat4 model);
+
+   explicit Figure(const char* vertexSource, const char* fragmentSource, const char* textureSource,
+                    std::vector<Vertex>& shape, std::vector<GLuint>& indices, glm::vec3 position, glm::mat4 model,
+                    float angle);
 
 
    explicit Figure(const char* vertexSource, const char* fragmentSource, const char* textureSource,
@@ -36,6 +41,7 @@ struct Figure {
    void Translate(GLFWwindow* window, MousePicker& mousePicker);
    void Rotate(GLFWwindow* window);
    void Delete();
+   void Restart();
 
 };
 

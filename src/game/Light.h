@@ -20,7 +20,10 @@ struct Light {
           glm::vec4 color, glm::vec3 position, glm::mat4 model);
 
     void Illuminate(Camera& camera);
+    void ChangeColor(glm::vec4 newColor);
     void Delete();
+
+    [[noreturn]] void operator()(bool switchLight);
 
 };
 
